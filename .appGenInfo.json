@@ -1,0 +1,33 @@
+{
+  "generationParameters": {
+    "generationDate": "Tue Jun 17 2025 08:42:43 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "SAP System (ABAP Environment on SAP Business Technology Platform)",
+    "metadataFilename": "",
+    "serviceUrl": "https://11b69711-9bcb-491b-b504-a9ba7e4b7e97.abap.us10.hana.ondemand.com/sap/opu/odata4/sap/zui_rap_app_o4_jc/srvd/sap/zsd_equip_maintenace_task_jc/0001/",
+    "appName": "coa-fiori-elements",
+    "appTitle": "equipment-maintence",
+    "appDescription": "An SAP Fiori application.",
+    "appNamespace": "",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.133.4",
+    "enableCodeAssist": false,
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.18.0",
+    "template": "List Report Page V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [
+      {
+        "type": "Main Entity",
+        "value": "ZC_EQUIPMENT_JC"
+      },
+      {
+        "type": "Navigation Entity",
+        "value": "_MaintenanceTasks"
+      }
+    ],
+    "launchText": "In order to launch the generated app, simply run the following from the generated app root folder:\n\n```\n    npm start\n```"
+  }
+}
