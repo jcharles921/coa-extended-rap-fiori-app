@@ -20,16 +20,14 @@
         "type": "ODataAnnotation",
         "uri": "annotations/annotation.xml",
         "settings": {
-          "localUri": "annotations/annotation.xml"
+          "localUri": "annotations/annotation.xml"  
         }
       },
       "mainService": {
         "uri": "/sap/opu/odata4/sap/zui_rap_app_o4_jc/srvd/sap/zsd_equip_maintenace_task_jc/0001/",
         "type": "OData",
         "settings": {
-          "annotations": [
-            "annotation"
-          ],
+          "annotations": ["annotation"],
           "localUri": "localService/mainService/metadata.xml",
           "odataVersion": "4.0"
         }
@@ -132,19 +130,7 @@
                   }
                 }
               },
-              "content": {
-                "header": {
-                  "actions": {
-                    "MaintenanceController": {
-                      "press": "coafiorielements.ext.controller.MaintenanceController.onPressTest",
-                      "visible": true,
-                      "enabled": true,
-                      "requiresSelection": false,
-                      "text": "DoSomething"
-                    }
-                  }
-                }
-              }
+              "content": {}
             }
           }
         },
@@ -166,30 +152,29 @@
             }
           }
         },
-        "ZC_MAINTENANCE_TASK_JCObjectPage": {
-          "type": "Component",
-          "id": "ZC_MAINTENANCE_TASK_JCObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-              "editableHeaderContent": false,
-              "contextPath": "/ZC_EQUIPMENT_JC/_MaintenanceTasks",
-              "content": {
-                "header": {
-                  "actions": {
-                    "MaintenanceController": {
-                      "press": "coafiorielements.ext.controller.MaintenanceController.onPressTest",
-                      "visible": true,
-                      "enabled": true,
-                      "requiresSelection": true,
-                      "text": "DoSomething"
-                    }
-                  }
-                }
+       "ZC_MAINTENANCE_TASK_JCObjectPage": {
+    "type": "Component",
+    "id": "ZC_MAINTENANCE_TASK_JCObjectPage",
+    "name": "sap.fe.templates.ObjectPage",
+    "options": {
+      "settings": {
+        "editableHeaderContent": false,
+        "contextPath": "/ZC_EQUIPMENT_JC/_MaintenanceTasks",
+        "content": {
+          "header": {
+            "actions": {
+              "MaintenanceController": {
+                "press": "coafiorielements.ext.controller.MaintenanceController.onPressTest",
+                "visible": true,
+                "enabled": true,
+                "text": "Workflow"
               }
             }
           }
         }
+      }
+    }
+  }
       }
     }
   },
