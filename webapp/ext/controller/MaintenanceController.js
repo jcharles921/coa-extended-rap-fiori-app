@@ -32,7 +32,7 @@ sap.ui.define([
             const aStatusOptions = [
                 { key: "reopenTask",    text: "Reopen",       enabled: uniqueStatuses.has("DONE") },
                 { key: "startProgress", text: "In Progress",  enabled: uniqueStatuses.has("OPEN") },
-                { key: "closeTask",     text: "Done",         enabled: uniqueStatuses.has("OPEN") || uniqueStatuses.has("IN_PROGRESS") }
+                { key: "closeTask",     text: "Done",         enabled: uniqueStatuses.has("OPEN") || uniqueStatuses.has("IN PROGRES") }
             ];
 
             // Create the Select control
@@ -73,6 +73,8 @@ sap.ui.define([
                         const sQualifiedAction = `${sNamespace}.${sActionKey}`;
 
                         let iSuccess = 0;
+                        let bHasError = false;
+
                         for (const oContext of aSelectedContexts) {
                             try {
                                 // Create operation binding for bound action
@@ -88,20 +90,58 @@ sap.ui.define([
                                 
                             } catch (oError) {
                                 console.error("Action execution failed:", oError);
+                                bHasError = true;
                                 MessageBox.error(`Failed to update task: ${oError.message || oError}`);
-                                return;
+                                break; // Stop processing if there's an error
                             }
                         }
 
-                        if (iSuccess > 0) {
+                        if (iSuccess > 0 && !bHasError) {
                             MessageToast.show(`${iSuccess} task(s) updated successfully.`);
-                            // Refresh the Maintenance Tasks table or fallback to full refresh
+                            
+                            // Multiple refresh strategies for RAP applications
                             try {
-                                oExtensionAPI.byId("fe::table::_MaintTasks::LineItem")
-                                    .getBinding("items")
-                                    .refresh();
-                            } catch (e) {
-                                oExtensionAPI.refresh();
+                                // Method 1: Try to refresh the maintenance tasks table specifically
+                                const oMaintenanceTasksTable = oExtensionAPI.byId("fe::table::ZC_MAINTENANCE_TASK_JC::LineItem");
+                                if (oMaintenanceTasksTable) {
+                                    oMaintenanceTasksTable.getBinding("items").refresh();
+                                    console.log("Refreshed maintenance tasks table directly");
+                                } else {
+                                    throw new Error("Table not found");
+                                }
+                            } catch (e1) {
+                                try {
+                                    // Method 2: Try alternative table ID pattern
+                                    const oTable = oExtensionAPI.byId("fe::table::_MaintenanceTasks::LineItem");
+                                    if (oTable) {
+                                        oTable.getBinding("items").refresh();
+                                        console.log("Refreshed with alternative table ID");
+                                    } else {
+                                        throw new Error("Alternative table not found");
+                                    }
+                                } catch (e2) {
+                                    try {
+                                        // Method 3: Refresh the page/view
+                                        oExtensionAPI.refreshPage();
+                                        console.log("Refreshed entire page");
+                                    } catch (e3) {
+                                        try {
+                                            // Method 4: Generic refresh
+                                            oExtensionAPI.refresh();
+                                            console.log("Generic refresh executed");
+                                        } catch (e4) {
+                                            // Method 5: Refresh binding contexts
+                                            aSelectedContexts.forEach(ctx => {
+                                                try {
+                                                    ctx.refresh();
+                                                } catch (e5) {
+                                                    console.warn("Could not refresh context:", e5);
+                                                }
+                                            });
+                                            console.log("Refreshed binding contexts");
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
